@@ -11,6 +11,7 @@ Highly opinionated backup tool for docker-compose.yml based containers.
 
 ## Requirements
  - docker
+ - docker-py
  - python 2.7
  - rdiff-backup
  - python-yaml
@@ -28,7 +29,7 @@ This tool takes as input folder containing docker app(s). Each app folder should
 ## Usage
 Backup all apps:
 ```bash
-$ ./dcbackup --apps-path=/path/to/apps --backup-path=server::/backup/location --command=backup-all
+$ ./dcbackup --apps-path=/path/to/apps --backup-path=server::/backup/location --command=backup
 ```
 Backup single app
 ```bash
