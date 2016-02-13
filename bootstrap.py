@@ -5,8 +5,8 @@ import argparse
 logging.basicConfig(
     format='%(asctime)s [%(levelname)s] %(message)s',
     datefmt='%m/%d/%Y %H:%M:%S',
-    level=logging.DEBUG
-    # filename='/var/log/dcbackup.log',
+    level=logging.DEBUG,
+    filename='/var/log/dcbackup.log'
 )
 
 
