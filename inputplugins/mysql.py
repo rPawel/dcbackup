@@ -39,7 +39,7 @@ def get_password(container_config):
 
 
 def mysqldump(user, password, cnt_full_name, cnt_name, dest_path):
-    command = "docker exec -it " + cnt_full_name + " mysqldump -u " + user + " -p'" + password + \
+    command = "docker exec -i " + cnt_full_name + " mysqldump -u " + user + " -p'" + password + \
               "' --all-databases --add-drop-database --routines -E --triggers --single-transaction | gzip > " + dest_path + "/" + cnt_name + ".sql.gz"
     shell.retry_run([command], 3)
     return True
