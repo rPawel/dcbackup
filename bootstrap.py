@@ -1,4 +1,3 @@
-import sys
 import logging
 import argparse
 
@@ -16,12 +15,7 @@ def get_input_params():
                         help='command')
     parser.add_argument('--apps-path', metavar='apps_path', required=True,
                         help='input path')
-    parser.add_argument('--backup-path', metavar='backup_path', required=True,
+    parser.add_argument('--backup-path', metavar='backup_path', required=False,
                         help='backup path')
 
     return parser.parse_args()
-
-
-def exit_with_error():
-    get_help_line()
-    sys.exit(2)

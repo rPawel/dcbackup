@@ -1,4 +1,5 @@
 import os
+import logging
 from lib import shell
 from dockerutil import demon
 from dockerutil import compose
@@ -39,7 +40,10 @@ def get_password(container_config):
 
 
 def mysqldump(user, password, cnt_full_name, cnt_name, dest_path):
+    dest_full_path = dest_path + "/" + cnt_name + ".sql.gz"
     command = "docker exec -i " + cnt_full_name + " mysqldump -u " + user + " -p'" + password + \
-              "' --all-databases --add-drop-database --routines -E --triggers --single-transaction | gzip > " + dest_path + "/" + cnt_name + ".sql.gz"
+              "' --all-databases --add-drop-database --routines -E --triggers --single-transaction | gzip > " + dest_full_path
     shell.retry_run([command], 3)
+    statinfo = os.stat(dest_full_path)
+    logging.info("Saved mysql db: " + dest_full_path + " using : " + str(statinfo.st_size/1024/1024) + " MB")
     return True

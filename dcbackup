@@ -36,11 +36,13 @@ def restore_all_apps():
 def process_app(app_path, backup_dir):
     app_dir_name = os.path.basename(app_path)
     app_data_path = app_path + "/data"
-    backup_folder = build_app_backup_path(backup_dir, app_dir_name)
 
-    logging.info("Backing up: " + app_path)
+    logging.info("Backing up database: " + app_path)
     mysql.backup(app_path, app_data_path)
-    datavolume.backup(app_path, backup_folder)
+    if backup_dir:
+        logging.info("Sending files to backup: " + app_path)
+        backup_folder = build_app_backup_path(backup_dir, app_dir_name)
+        datavolume.backup(app_path, backup_folder)
 
 
 def build_app_backup_path(backup_dir, app_dir_name):
