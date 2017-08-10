@@ -4,7 +4,7 @@ import glob
 
 def load(app_composer_path):
     stream = open(app_composer_path, "r")
-    return yaml.load_all(stream)
+    return yaml.load(stream)
 
 
 def find_configs(input_dir):

@@ -21,10 +21,16 @@ def backup(app_path, dest_path):
 
 def extract_mysql_containers_from_config(compose_config):
     mysql_containers = []
-    for container in compose_config:
-        for k, v in container.items():
-            if "mysql" in k:
-                mysql_containers.append((k, v))
+
+    if 'version' in compose_config and 'services' in compose_config:
+        services = compose_config['services']
+    else:
+        services = compose_config
+
+    for k, v in services.items():
+        if "mysql" == k:
+            mysql_containers.append((k, v))
+
     if mysql_containers.count == 0:
         return False
     else:
@@ -41,8 +47,9 @@ def get_password(container_config):
 
 def mysqldump(user, password, cnt_full_name, cnt_name, dest_path):
     dest_full_path = dest_path + "/" + cnt_name + ".sql.gz"
-    command = "docker exec -i " + cnt_full_name + " mysqldump -u " + user + " -p'" + password + \
-              "' --all-databases --add-drop-database --routines -E --triggers --single-transaction | gzip > " + dest_full_path
+    command = "docker exec -i " + cnt_full_name + " MYSQL_PWD=" + password + " mysqldump -u " + user + \
+              " --all-databases --add-drop-database --routines -E --triggers --single-transaction | gzip > " + \
+              dest_full_path
     shell.retry_run([command], 3)
     statinfo = os.stat(dest_full_path)
     logging.info("Saved mysql db: " + dest_full_path + " using : " + str(statinfo.st_size/1024/1024) + " MB")
