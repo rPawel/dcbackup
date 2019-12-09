@@ -38,9 +38,9 @@ def extract_mysql_containers_from_config(compose_config):
 
 
 def get_password(container_config):
-    if container_config.has_key('environment'):
+    if 'environment' in container_config:
         env = container_config['environment']
-        if env.has_key('MYSQL_ROOT_PASSWORD'):
+        if 'MYSQL_ROOT_PASSWORD' in env:
             return env['MYSQL_ROOT_PASSWORD']
     return False
 
