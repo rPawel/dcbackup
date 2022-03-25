@@ -8,6 +8,7 @@ import socket
 
 from inputplugins import datavolume
 from inputplugins import mysql
+from inputplugins import mariadb
 from dockerutil import compose
 
 import bootstrap
@@ -39,6 +40,7 @@ def process_app(app_path, backup_dir):
 
     logging.info("Backing up database: " + app_path)
     mysql.backup(app_path, app_data_path)
+    mariadb.backup(app_path, app_data_path)
     if backup_dir:
         logging.info("Sending files to backup: " + app_path)
         backup_folder = build_app_backup_path(backup_dir, app_dir_name)
